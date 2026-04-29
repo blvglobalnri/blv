@@ -63,8 +63,11 @@
 //   const suffix = value.replace(/[0-9]/g, "");
 
 //   return (
-//     <div ref={ref} className="text-center">
-//       <div className="font-serif text-3xl md:text-4xl font-bold text-gold mb-1">
+//     <div
+//       ref={ref}
+//       className="text-center flex flex-col items-center justify-start"
+//     >
+//       <div className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-gold mb-2">
 //         {inView ? (
 //           <>
 //             <CountUp end={number} duration={2} />
@@ -74,29 +77,31 @@
 //           "0"
 //         )}
 //       </div>
-//       <div className="text-sm text-primary-foreground/60">{label}</div>
+//       <div className="text-sm text-primary-foreground/60 max-w-[200px] leading-snug">
+//         {label}
+//       </div>
 //     </div>
 //   );
 // };
 
 // const Index = () => {
-//   const stats = [
+//   const topStats = [
 //     { value: "8+", label: "Years Experience" },
 //     { value: "90+", label: "Projects Completed" },
 //     {
-//       value: "3",
-//       label: (
-//         <>
-//           STATES:{" "}
-//           <span className="text-gold font-medium">
-//             TELANGANA, <br />
-//             ANDHRA PRADESH, KARNATAKA
-//           </span>
-//         </>
-//       ),
-//     },
+// value: "3 STATES",
+//   label: (
+//     <div className="text-primary-foreground/60 leading-tight">
+//       <div className="font-medium text-primary-foreground">
+//          TELANGANA
+//       </div>
+//       <div className="text-primary-foreground">
+//         ANDHRA PRADESH, KARNATAKA
+//       </div>
+//     </div>
+//   ),
+// },
 //     { value: "100%", label: "FEMA Compliant" },
-//     { value: "₹150cr+", label: "Transactions Facilitated" },
 //   ];
 
 //   const certifications = [
@@ -144,7 +149,7 @@
 //                 />
 //                 <FadeIn delay={800} duration={1000}>
 //                   <p
-//                     className="text-base md:text-lg text-gray-300 mb-5 max-w-xl"
+//                     className="text-base md:text-lg text-gray-300 mb-5 max-w-2xl"
 //                     style={{ letterSpacing: "-0.01em" }}
 //                   >
 //                     Your Permanent Presence in India – without being here.
@@ -180,31 +185,47 @@
 //         </div>
 //       </section>
 
-//       {/* STATS */}
-//       <section className="bg-navy py-12">
-//         <div className="max-w-6xl mx-auto px-4">
-//           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-//             {stats.slice(0, 4).map((stat, index) => (
-//               <StatItem key={index} value={stat.value} label={stat.label} />
-//             ))}
-//           </div>
-//           <div className="flex flex-wrap items-center justify-center gap-10 mt-12">
-//             <StatItem value="150cr+" label="Transactions Facilitated" />
-//             {certifications.map((item) => (
-//               <div key={item.title} className="text-center max-w-xs">
-//                 <div className="font-serif text-lg md:text-xl font-bold text-gold mb-1">
-//                   {item.title}
-//                 </div>
-//                 <div className="text-primary-foreground/60 leading-tight text-[11px] md:text-xs lg:text-sm max-w-[260px] mx-auto text-center">
-//                   {item.subtitle}
-//                 </div>
-//                 {item.extra && (
-//                   <div className="text-sm text-primary-foreground/60 leading-snug">
-//                     {item.extra}
+//       {/* STATS & CERTIFICATIONS (Re-aligned to match the image) */}
+//       <section className="bg-navy py-16 lg:py-20">
+//         <div className="max-w-7xl mx-auto px-4 md:px-8">
+//           <div className="flex flex-col gap-16 md:gap-24">
+//             {/* ROW 1: Top 4 Stats */}
+//             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 items-start">
+//               {topStats.map((stat, index) => (
+//                 <StatItem key={index} value={stat.value} label={stat.label} />
+//               ))}
+//             </div>
+
+//             {/* ROW 2: ₹150cr+ & 3 Certifications */}
+//             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 items-start">
+//               {/* Leftmost Item (Animated Stat) */}
+//               <StatItem value="150cr+" label="Transactions Facilitated" />
+
+//               {/* Remaining 3 Items (Certifications) */}
+//               {certifications.map((item) => (
+//                 <div
+//                   key={item.title}
+//                   className="text-center flex flex-col items-center justify-start"
+//                 >
+//                   {/* Title */}
+//                   <div className="font-serif text-lg md:text-xl lg:text-2xl font-bold text-gold mb-2 leading-tight">
+//                     {item.title}
 //                   </div>
-//                 )}
-//               </div>
-//             ))}
+
+//                   {/* Subtitle */}
+//                   <div className="text-primary-foreground/60 text-xs md:text-sm uppercase tracking-wider mb-1 max-w-[260px] mx-auto leading-snug">
+//                     {item.subtitle}
+//                   </div>
+
+//                   {/* Extra text (only for RERA) */}
+//                   {item.extra && (
+//                     <div className="text-primary-foreground/50 text-[11px] md:text-xs max-w-[240px] mx-auto mt-1 leading-snug">
+//                       {item.extra}
+//                     </div>
+//                   )}
+//                 </div>
+//               ))}
+//             </div>
 //           </div>
 //         </div>
 //       </section>
@@ -295,94 +316,106 @@
 
 //       {/* AWARDS & RECOGNITION (Natural Size Layout) */}
 //       <section className="section-padding bg-navy relative overflow-hidden">
-//         <div className="max-w-6xl mx-auto px-4 md:px-0">
-//           {/* Using grid columns but normal block stacking inside to prevent stretching */}
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-//             {/* LEFT COLUMN (Wider column for group photos) */}
-//             <div className="md:col-span-2 flex flex-col gap-6">
-//               {/* Top Left - Group Photo */}
-//               <div className="rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
-//                 <img
-//                   src={about1}
-//                   alt="Award Ceremony Group"
-//                   className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
-//                 />
-//               </div>
+//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
-//               {/* Bottom Left - Award Receipt Card */}
-//               <div className="rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
-//                 <div className="overflow-hidden bg-black/40">
-//                   <img
-//                     src={awardCeremony}
-//                     alt="PVR Vagesh Datt receiving International Business & Education Award 2026"
-//                     className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
-//                     loading="lazy"
-//                   />
-//                 </div>
-//                 <div className="p-5 md:p-6 bg-navy-dark relative z-10">
-//                   <div className="flex items-center gap-2 mb-2">
-//                     <Award className="h-5 w-5 text-gold flex-shrink-0" />
-//                     <span className="text-gold font-semibold text-sm line-clamp-1">
-//                       International Business & Education Awards 2026
-//                     </span>
-//                   </div>
-//                   <p className="text-primary-foreground/70 text-sm leading-relaxed">
-//                     PVR Vagesh Datt, Founder & Managing Director, receiving the
-//                     award at Hyatt Centric, New Delhi.
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
+//   {/* ✅ TOP ROW (about1 + about2) */}
+//   <div className="md:col-span-2 rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
+//     <img
+//       src={about1}
+//       alt="Award Ceremony Group"
+//       className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
+//     />
+//   </div>
 
-//             {/* RIGHT COLUMN (Narrow column for vertical photos) */}
-//             <div className="md:col-span-1 flex flex-col gap-6">
-//               {/* Top Right - Duo Photo */}
-//               <div className="rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
-//                 <img
-//                   src={about2}
-//                   alt="Award Recognition Duo"
-//                   className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
-//                 />
-//               </div>
+//   <div className="rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
+//     <img
+//       src={about2}
+//       alt="Award Recognition Duo"
+//       className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
+//     />
+//   </div>
 
-//               {/* Bottom Right - Media Recognition Card */}
-//               <div className="rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
-//                 <div className="overflow-hidden bg-black/40">
-//                   <img
-//                     src={about4}
-//                     alt="Media Recognition"
-//                     className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
-//                     loading="lazy"
-//                   />
-//                 </div>
-//                 <div className="p-5 md:p-6 bg-navy-dark relative z-10">
-//                   <div className="flex items-center gap-2 mb-2">
-//                     <Trophy className="h-5 w-5 text-gold flex-shrink-0" />
-//                     <span className="text-gold font-semibold text-sm line-clamp-1">
-//                       Media Recognition
-//                     </span>
-//                   </div>
-//                   <p className="text-primary-foreground/70 text-sm leading-relaxed">
-//                     Featured in Telangana News Spot — Best Global NRI Property
-//                     Management Company.
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
+//   {/* ✅ MESSAGE FULL ROW */}
+//   <div className="md:col-span-3 flex justify-center">
+//     <div className="md:col-span-3 flex justify-center">
+//   <div className="max-w-3xl w-full rounded-2xl border border-gold/20 bg-navy-dark shadow-lg p-6 text-center">
 
-//           {/* Footer Award Callout */}
-//           <div className="mt-10 flex justify-center w-full">
-//             <div className="liquid-glass border border-gold/20 px-8 py-5 rounded-2xl text-center shadow-2xl bg-black/20 backdrop-blur-sm w-full md:w-auto">
-//               <p className="text-primary-foreground font-serif text-lg md:text-xl font-semibold">
-//                 🏆 Best Global NRI Property Management Company — 2026
-//               </p>
-//               <p className="text-primary-foreground/50 text-sm mt-2">
-//                 International Business & Education Awards, New Delhi
-//               </p>
-//             </div>
-//           </div>
-//         </div>
+//     <p className="text-primary-foreground/80 text-sm md:text-base leading-relaxed flex items-start justify-center gap-2">
+      
+//       {/* ✅ ICON INLINE */}
+//       <Award className="h-5 w-5 text-gold mt-1 flex-shrink-0" />
+
+//       {/* ✅ TEXT */}
+//       <span>
+//         Honoured & privileged to receive the International Business & Education Awards 2026 from{" "}
+//         <span className="text-gold font-semibold">
+//           International Cricketer Mr. Suresh Raina
+//         </span>{" "}
+//         at{" "}
+//         <span className="text-gold font-medium">
+//           Hyatt Centric New Delhi
+//         </span>{" "}
+//         — a proud moment on{" "}
+//         <span className="font-medium">11th April 2026</span> for{" "}
+//         <span className="text-gold font-medium">
+//           Best Global NRI Property Management Company
+//         </span>.
+//       </span>
+
+//     </p>
+
+//   </div>
+// </div>
+//   </div>
+
+//   {/* ✅ BOTTOM ROW */}
+//   <div className="md:col-span-2 rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
+//     <div className="overflow-hidden bg-black/40">
+//       <img
+//         src={awardCeremony}
+//         alt="Award Ceremony"
+//         className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
+//       />
+//     </div>
+
+//     <div className="p-5 md:p-6 bg-navy-dark">
+//       <div className="flex items-center gap-2 mb-2">
+//         <Award className="h-5 w-5 text-gold" />
+//         <span className="text-gold font-semibold text-sm">
+//           International Business & Education Awards 2026
+//         </span>
+//       </div>
+
+//       <p className="text-primary-foreground/70 text-sm">
+//         PVR Vagesh Datt, Founder & Managing Director, receiving the award at Hyatt Centric, New Delhi.
+//       </p>
+//     </div>
+//   </div>
+
+//   <div className="rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
+//     <div className="overflow-hidden bg-black/40">
+//       <img
+//         src={about4}
+//         alt="Media Recognition"
+//         className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
+//       />
+//     </div>
+
+//     <div className="p-5 md:p-6 bg-navy-dark">
+//       <div className="flex items-center gap-2 mb-2">
+//         <Trophy className="h-5 w-5 text-gold" />
+//         <span className="text-gold font-semibold text-sm">
+//           Media Recognition
+//         </span>
+//       </div>
+
+//       <p className="text-primary-foreground/70 text-sm">
+//         Telangana Global Elite Business Award 2026 for Best NRI Property Asset Management Company of the Year-India.
+//       </p>
+//     </div>
+//   </div>
+
+// </div>
 //       </section>
 
 //       {/* OUR PRESENCE — South India Map */}
@@ -670,18 +703,18 @@ const Index = () => {
     { value: "8+", label: "Years Experience" },
     { value: "90+", label: "Projects Completed" },
     {
-value: "3 STATES",
-  label: (
-    <div className="text-primary-foreground/60 leading-tight">
-      <div className="font-medium text-primary-foreground">
-         TELANGANA
-      </div>
-      <div className="text-primary-foreground">
-        ANDHRA PRADESH, KARNATAKA
-      </div>
-    </div>
-  ),
-},
+      value: "3 STATES",
+      label: (
+        <div className="text-primary-foreground/60 leading-tight">
+          <div className="font-medium text-primary-foreground">
+            TELANGANA
+          </div>
+          <div className="text-primary-foreground">
+            ANDHRA PRADESH, KARNATAKA
+          </div>
+        </div>
+      ),
+    },
     { value: "100%", label: "FEMA Compliant" },
   ];
 
@@ -708,15 +741,21 @@ value: "3 STATES",
     <div className="min-h-screen">
       {/* HERO */}
       <section className="relative h-screen overflow-hidden bg-black">
+        {/* UPDATED VIDEO TAG */}
         <video
           autoPlay
           loop
           muted
+          defaultMuted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          controls={false}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
         >
           <source src={HERO_VIDEO_URL} type="video/mp4" />
         </video>
+
+        {/* Optional Overlay to guarantee video is darkened and text is readable */}
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
         <div className="relative z-10 h-full flex flex-col px-6 md:px-12 lg:px-16">
           <div className="flex-1 flex flex-col justify-end pb-12 lg:pb-16">
@@ -766,7 +805,7 @@ value: "3 STATES",
         </div>
       </section>
 
-      {/* STATS & CERTIFICATIONS (Re-aligned to match the image) */}
+      {/* STATS & CERTIFICATIONS */}
       <section className="bg-navy py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex flex-col gap-16 md:gap-24">
@@ -779,26 +818,19 @@ value: "3 STATES",
 
             {/* ROW 2: ₹150cr+ & 3 Certifications */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 items-start">
-              {/* Leftmost Item (Animated Stat) */}
               <StatItem value="150cr+" label="Transactions Facilitated" />
 
-              {/* Remaining 3 Items (Certifications) */}
               {certifications.map((item) => (
                 <div
                   key={item.title}
                   className="text-center flex flex-col items-center justify-start"
                 >
-                  {/* Title */}
                   <div className="font-serif text-lg md:text-xl lg:text-2xl font-bold text-gold mb-2 leading-tight">
                     {item.title}
                   </div>
-
-                  {/* Subtitle */}
                   <div className="text-primary-foreground/60 text-xs md:text-sm uppercase tracking-wider mb-1 max-w-[260px] mx-auto leading-snug">
                     {item.subtitle}
                   </div>
-
-                  {/* Extra text (only for RERA) */}
                   {item.extra && (
                     <div className="text-primary-foreground/50 text-[11px] md:text-xs max-w-[240px] mx-auto mt-1 leading-snug">
                       {item.extra}
@@ -895,111 +927,93 @@ value: "3 STATES",
         </div>
       </section>
 
-      {/* AWARDS & RECOGNITION (Natural Size Layout) */}
+      {/* AWARDS & RECOGNITION */}
       <section className="section-padding bg-navy relative overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="md:col-span-2 rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
+            <img
+              src={about1}
+              alt="Award Ceremony Group"
+              className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
+            />
+          </div>
 
-  {/* ✅ TOP ROW (about1 + about2) */}
-  <div className="md:col-span-2 rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
-    <img
-      src={about1}
-      alt="Award Ceremony Group"
-      className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
-    />
-  </div>
+          <div className="rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
+            <img
+              src={about2}
+              alt="Award Recognition Duo"
+              className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
+            />
+          </div>
 
-  <div className="rounded-2xl border border-gold/20 shadow-lg bg-black/40 overflow-hidden group">
-    <img
-      src={about2}
-      alt="Award Recognition Duo"
-      className="w-full h-auto max-h-[350px] object-contain transition duration-500 group-hover:scale-105"
-    />
-  </div>
+          <div className="md:col-span-3 flex justify-center">
+            <div className="max-w-3xl w-full rounded-2xl border border-gold/20 bg-navy-dark shadow-lg p-6 text-center">
+              <p className="text-primary-foreground/80 text-sm md:text-base leading-relaxed flex items-start justify-center gap-2">
+                <Award className="h-5 w-5 text-gold mt-1 flex-shrink-0" />
+                <span>
+                  Honoured & privileged to receive the International Business & Education Awards 2026 from{" "}
+                  <span className="text-gold font-semibold">
+                    International Cricketer Mr. Suresh Raina
+                  </span>{" "}
+                  at{" "}
+                  <span className="text-gold font-medium">
+                    Hyatt Centric New Delhi
+                  </span>{" "}
+                  — a proud moment on{" "}
+                  <span className="font-medium">11th April 2026</span> for{" "}
+                  <span className="text-gold font-medium">
+                    Best Global NRI Property Management Company
+                  </span>.
+                </span>
+              </p>
+            </div>
+          </div>
 
-  {/* ✅ MESSAGE FULL ROW */}
-  <div className="md:col-span-3 flex justify-center">
-    <div className="md:col-span-3 flex justify-center">
-  <div className="max-w-3xl w-full rounded-2xl border border-gold/20 bg-navy-dark shadow-lg p-6 text-center">
+          <div className="md:col-span-2 rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
+            <div className="overflow-hidden bg-black/40">
+              <img
+                src={awardCeremony}
+                alt="Award Ceremony"
+                className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-5 md:p-6 bg-navy-dark">
+              <div className="flex items-center gap-2 mb-2">
+                <Award className="h-5 w-5 text-gold" />
+                <span className="text-gold font-semibold text-sm">
+                  International Business & Education Awards 2026
+                </span>
+              </div>
+              <p className="text-primary-foreground/70 text-sm">
+                PVR Vagesh Datt, Founder & Managing Director, receiving the award at Hyatt Centric, New Delhi.
+              </p>
+            </div>
+          </div>
 
-    <p className="text-primary-foreground/80 text-sm md:text-base leading-relaxed flex items-start justify-center gap-2">
-      
-      {/* ✅ ICON INLINE */}
-      <Award className="h-5 w-5 text-gold mt-1 flex-shrink-0" />
-
-      {/* ✅ TEXT */}
-      <span>
-        Honoured & privileged to receive the International Business & Education Awards 2026 from{" "}
-        <span className="text-gold font-semibold">
-          International Cricketer Mr. Suresh Raina
-        </span>{" "}
-        at{" "}
-        <span className="text-gold font-medium">
-          Hyatt Centric New Delhi
-        </span>{" "}
-        — a proud moment on{" "}
-        <span className="font-medium">11th April 2026</span> for{" "}
-        <span className="text-gold font-medium">
-          Best Global NRI Property Management Company
-        </span>.
-      </span>
-
-    </p>
-
-  </div>
-</div>
-  </div>
-
-  {/* ✅ BOTTOM ROW */}
-  <div className="md:col-span-2 rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
-    <div className="overflow-hidden bg-black/40">
-      <img
-        src={awardCeremony}
-        alt="Award Ceremony"
-        className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
-      />
-    </div>
-
-    <div className="p-5 md:p-6 bg-navy-dark">
-      <div className="flex items-center gap-2 mb-2">
-        <Award className="h-5 w-5 text-gold" />
-        <span className="text-gold font-semibold text-sm">
-          International Business & Education Awards 2026
-        </span>
-      </div>
-
-      <p className="text-primary-foreground/70 text-sm">
-        PVR Vagesh Datt, Founder & Managing Director, receiving the award at Hyatt Centric, New Delhi.
-      </p>
-    </div>
-  </div>
-
-  <div className="rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
-    <div className="overflow-hidden bg-black/40">
-      <img
-        src={about4}
-        alt="Media Recognition"
-        className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
-      />
-    </div>
-
-    <div className="p-5 md:p-6 bg-navy-dark">
-      <div className="flex items-center gap-2 mb-2">
-        <Trophy className="h-5 w-5 text-gold" />
-        <span className="text-gold font-semibold text-sm">
-          Media Recognition
-        </span>
-      </div>
-
-      <p className="text-primary-foreground/70 text-sm">
-        Telangana Global Elite Business Award 2026 for Best NRI Property Asset Management Company of the Year-India.
-      </p>
-    </div>
-  </div>
-
-</div>
+          <div className="rounded-2xl overflow-hidden border border-gold/20 shadow-lg bg-navy-dark group">
+            <div className="overflow-hidden bg-black/40">
+              <img
+                src={about4}
+                alt="Media Recognition"
+                className="w-full h-auto max-h-[350px] object-contain transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-5 md:p-6 bg-navy-dark">
+              <div className="flex items-center gap-2 mb-2">
+                <Trophy className="h-5 w-5 text-gold" />
+                <span className="text-gold font-semibold text-sm">
+                  Media Recognition
+                </span>
+              </div>
+              <p className="text-primary-foreground/70 text-sm">
+                Telangana Global Elite Business Award 2026 for Best NRI Property Asset Management Company of the Year-India.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* OUR PRESENCE — South India Map */}
+      {/* OUR PRESENCE */}
       <section className="section-padding bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
