@@ -741,7 +741,11 @@ const Index = () => {
     <div className="min-h-screen">
       {/* HERO */}
       <section className="relative h-screen overflow-hidden bg-black">
-        {/* UPDATED VIDEO TAG */}
+        {/* 
+          ADDED: 
+          1. Webkit hidden media controls to strip out the native iOS play button overlay 
+          2. Note: You should add a poster="/your-fallback-image.jpg" here so it looks like a nice hero image if video is blocked
+        */}
         <video
           autoPlay
           loop
@@ -749,12 +753,11 @@ const Index = () => {
           defaultMuted
           playsInline
           controls={false}
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none [&::-webkit-media-controls-overlay-play-button]:hidden [&::-webkit-media-controls-start-playback-button]:hidden [&::-webkit-media-controls]:hidden"
         >
           <source src={HERO_VIDEO_URL} type="video/mp4" />
         </video>
 
-        {/* Optional Overlay to guarantee video is darkened and text is readable */}
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
         <div className="relative z-10 h-full flex flex-col px-6 md:px-12 lg:px-16">
